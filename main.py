@@ -1,8 +1,7 @@
 from valid import *
 
+from loginGui import *
+
+CreateGUI()
 
 
-try:
-    lengthCheck("abcd",4)
-except:
-    print("more parameters")
