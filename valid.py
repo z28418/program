@@ -7,7 +7,7 @@
 #=============================================
 
 
-
+# use try to write own error message for errors so it doesnt crash
 # this function is for checking the length of our data
 # data is what we want to chack, length is our value for our max/min length
 # option is for later when decide what length im checking
@@ -22,6 +22,13 @@ def lengthCheck(data,length,option):
                 return True
             else:
                 return False
+
+    elif option == 3:
+        if len(data) <= length:
+            return True
+
+        else:
+            return False
 
 
 
