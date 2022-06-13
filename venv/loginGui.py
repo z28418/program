@@ -9,6 +9,7 @@
 from output_messages import*
 
 from tkinter.colorchooser import askcolor
+from settingsGui import *
 
 from tkinter import *
 from tkinter import Menu
@@ -16,6 +17,7 @@ from tkinter import messagebox
 
 
 def CreateGUI():
+    
     global  form
     global welcomeLabel
     form = Tk()
@@ -55,10 +57,10 @@ def CreateGUI():
     loginButton.config(bg = "#FFFFFF")
 
 
-    settingsButton = Button(form, text="settings", width=12, borderwidth=2, relief="solid", command=lambda:
-    loginValid(form, userEntry, passwordEntry))
-    settingsButton.place(relx = 0.6,rely = 0.8,relwidth = 0.15,relheight = 0.1)
-    settingsButton.config(bg = "#FFFFFF")
+    signupButton = Button(form, text="sign up", width=12, borderwidth=2, relief="solid", command=lambda:create_signup_gui(form))
+
+    signupButton.place(relx = 0.6,rely = 0.8,relwidth = 0.15,relheight = 0.1)
+    signupButton.config(bg = "#FFFFFF")
     userEntry.focus()
 
 
