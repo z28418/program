@@ -20,9 +20,17 @@ from pygame.locals import (
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
+W, H = 800, 447
+win = pygame.display.set_mode((W,H))
+
 bg = pygame.image.load(os.path.join("images","background.jfif"))
 bgX = 0
 bgX2=bg.get_width()
+
+def redrawWindow():
+    win.blit(bg, (bgX, 0))  # draws our first bg image
+    win.blit(bg, (bgX2, 0))  # draws the seconf bg image
+    pygame.display.update()
 
 class player(pygame.sprite.Sprite):
     def __init__(self):
@@ -97,8 +105,15 @@ clock = pygame.time.Clock()
 speed = 30
 # Main loop
 while running:
+    redrawWindow()
+
     bgX -=1.4
     bgX2 -= 1.4
+    if bgX < bg.get_width() * -1:
+        bgX = bg.get_width()
+
+    if bgX2 < bg.get_width() * -1 :
+        bgX2 = bg.get_width()
 
     clock.tick(speed)
     # for loop through the event queue
