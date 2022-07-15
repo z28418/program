@@ -1,5 +1,8 @@
 import pygame
 import random
+import sys
+import os
+import math
 
 
 
@@ -17,7 +20,9 @@ from pygame.locals import (
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-
+bg = pygame.image.load(os.path.join("images","background.jfif"))
+bgX = 0
+bgX2=bg.get_width()
 
 class player(pygame.sprite.Sprite):
     def __init__(self):
@@ -28,7 +33,8 @@ class player(pygame.sprite.Sprite):
 
 
 
-    def move(self, pressed_keys):
+    def move(self):
+        pressed_keys = pygame.key.get_pressed()
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -5)
         if pressed_keys[K_DOWN]:
@@ -77,6 +83,8 @@ pygame.init()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+ADDENEMY = pygame.USEREVENT + 1
+pygame.time.set_timer(ADDENEMY, 250)
 
 player = player()
 
@@ -85,11 +93,14 @@ all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
 running = True
-
+clock = pygame.time.Clock()
+speed = 30
 # Main loop
 while running:
+    bgX -=1.4
+    bgX2 -= 1.4
 
-
+    clock.tick(speed)
     # for loop through the event queue
     for event in pygame.event.get():
         # Check for KEYDOWN event
@@ -101,19 +112,29 @@ while running:
         elif event.type == QUIT:
             running = False
 
-
-        pressed_keys = pygame.key.get_pressed()
-        player.move(pressed_keys)
-
-
-        screen.fill((0, 0, 0))
+        elif event.type == ADDENEMY:
+            new_enemy = Enemy()
+            enemies.add(new_enemy)
+            all_sprites.add(new_enemy)
 
 
-        screen.blit(player.surf,player.rect)
 
-        for entity in all_sprites:
-            screen.blit(entity.surf, entity.rect)
+    player.update()
+
+    enemies.update()
+
+    screen.fill((0, 0, 0))
 
 
-        pygame.display.flip()
+    screen.blit(player.surf,player.rect)
+
+    for entity in all_sprites:
+        screen.blit(entity.surf, entity.rect)
+
+    if pygame.sprite.spritecollideany(player,enemies):
+        player.kill()
+        running = False
+
+
+    pygame.display.flip()
 
